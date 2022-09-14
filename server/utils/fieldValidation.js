@@ -34,6 +34,8 @@ module.exports = {
 function createSchemaFromConfig(pageConfig) {
   const yesterday = moment().subtract(1, 'd').format('MM/DD/YYYY')
   const tomorrow = moment().add(1, 'd').format('MM/DD/YYYY')
+  const threeYears = moment().add(3, 'y').format('MM/DD/YYYY')
+  const oneYear = moment().add(1, 'y').format('MM/DD/YYYY')
 
   const fieldOptions = {
     requiredString: joi.string().required(),
@@ -54,6 +56,12 @@ function createSchemaFromConfig(pageConfig) {
         is: requiredAnswer,
         then: joi.string().required(),
         otherwise: joi.any().optional(),
+      }),
+    indeterminateCheck: (requiredItem = 'indeterminate', requiredAnswer = 'true') =>
+      joi.when(requiredItem, {
+        is: requiredAnswer,
+        then: joi.date().format('D/M/YYYY').min(yesterday).max(threeYears).required(),
+        otherwise: joi.date().format('D/M/YYYY').min(yesterday).max(oneYear).required(),
       }),
   }
 

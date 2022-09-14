@@ -20,6 +20,8 @@
   <p>Their conditional release date is {{ getLongDateFormat(dateConverter(data.details.sentence.conditionalReleaseDate)) }}.</p>
 {% endif %}
 
+<input name="indeterminate" type="input" value="{{ data.details.sentence.indeterminate }}" />
+
 {{ govukInput({
   id: "reviewDate",
   name: "date",
